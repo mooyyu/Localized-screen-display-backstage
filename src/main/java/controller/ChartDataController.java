@@ -12,19 +12,13 @@ import service.DataService;
 import java.util.List;
 
 @Controller
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin
 @RequestMapping(value = "/data", method = {RequestMethod.GET}, produces = "application/json;charset=utf-8")
-public class OverviewChartDataController {
+public class ChartDataController {
     private final DataService dataService;
     @Autowired
-    public OverviewChartDataController(DataService dataService) {
+    public ChartDataController(DataService dataService) {
         this.dataService = dataService;
-    }
-
-    @RequestMapping(value = "/", method = {RequestMethod.GET})
-    @ResponseBody
-    public String PrintHelloWorld() {
-        return "hello, world.";
     }
 
     @RequestMapping(value = "collegeOverview", method = {RequestMethod.GET})
