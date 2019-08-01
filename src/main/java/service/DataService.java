@@ -13,5 +13,9 @@ public interface DataService {
 
     List<Hanging> getHanging();
 
+    List<Hanging> getHangingDistribution(String type);
+
     List<PopularElective> getPopularElective();
+
+    List<StuSourceDistribution> getStuSourceDistribution();
 }

@@ -1,15 +1,15 @@
 package pojo;
 
 public class Hanging {
-    private String kcmc;
+    private String mc;
     private double rate;
 
-    public String getKcmc() {
-        return kcmc;
+    public String getMc() {
+        return mc;
     }
 
-    public void setKcmc(String kcmc) {
-        this.kcmc = kcmc;
+    public void setMc(String mc) {
+        this.mc = mc;
     }
 
     public double getRate() {

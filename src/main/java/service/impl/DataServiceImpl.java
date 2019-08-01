@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pojo.*;
 import service.DataService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,7 +38,21 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    public List<Hanging> getHangingDistribution(String type) {
+        if (type.equals("bjmc") || type.equals("zymc")) {
+            return dataDao.getHangingDistribution(type);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
     public List<PopularElective> getPopularElective() {
         return dataDao.getPopularElective();
+    }
+
+    @Override
+    public List<StuSourceDistribution> getStuSourceDistribution() {
+        return dataDao.getStuSourceDistribution();
     }
 }

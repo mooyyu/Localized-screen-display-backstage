@@ -1,11 +1,9 @@
 package controller;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import pojo.*;
 import service.DataService;
 
@@ -45,9 +43,21 @@ public class ChartDataController {
         return dataService.getPopularElective();
     }
 
+    @RequestMapping(value = "hangingDistribution", method = {RequestMethod.GET})
+    @ResponseBody
+    public List<Hanging> getHangingDistribution(@RequestParam String type) {
+        return dataService.getHangingDistribution(type);
+    }
+
     @RequestMapping(value = "hanging", method = {RequestMethod.GET})
     @ResponseBody
     public List<Hanging> getHanging() {
         return dataService.getHanging();
+    }
+
+    @RequestMapping(value = "stuSourceDistribution")
+    @ResponseBody
+    public List<StuSourceDistribution> getStuSourceDistribution() {
+        return dataService.getStuSourceDistribution();
     }
 }
