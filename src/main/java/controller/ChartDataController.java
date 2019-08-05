@@ -60,4 +60,10 @@ public class ChartDataController {
     public List<StuSourceDistribution> getStuSourceDistribution() {
         return dataService.getStuSourceDistribution();
     }
+
+    @RequestMapping(value = "developmentPath", method = {RequestMethod.GET})
+    @ResponseBody
+    public List<DevelopmentPath> getDevelopmentPath() {
+        return dataService.getDevelopmentPath();
+    }
 }

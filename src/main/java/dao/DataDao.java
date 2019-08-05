@@ -19,4 +19,6 @@ public interface DataDao {
     List<PopularElective> getPopularElective();
 
     List<StuSourceDistribution> getStuSourceDistribution();
+
+    List<DevelopmentPath> getDevelopmentPath();
 }

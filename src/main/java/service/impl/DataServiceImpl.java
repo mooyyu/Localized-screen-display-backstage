@@ -55,4 +55,9 @@ public class DataServiceImpl implements DataService {
     public List<StuSourceDistribution> getStuSourceDistribution() {
         return dataDao.getStuSourceDistribution();
     }
+
+    @Override
+    public List<DevelopmentPath> getDevelopmentPath() {
+        return dataDao.getDevelopmentPath();
+    }
 }
