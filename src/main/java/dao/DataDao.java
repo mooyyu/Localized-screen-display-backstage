@@ -21,4 +21,6 @@ public interface DataDao {
     List<StuSourceDistribution> getStuSourceDistribution();
 
     List<DevelopmentPath> getDevelopmentPath();
+
+    List<CollegeInfo> getCollegeInfo();
 }

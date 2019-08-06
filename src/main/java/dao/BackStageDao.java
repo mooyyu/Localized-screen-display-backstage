@@ -3,6 +3,7 @@ package dao;
 import org.apache.ibatis.annotations.Param;
 import pojo.CollegeInfo;
 import pojo.DevelopmentPath;
+import pojo.JAAStatus;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface BackStageDao {
     void deleteCollegeInfo(@Param("id") int id);
 
     void updateCollegeInfo(CollegeInfo collegeInfo);
+
+    JAAStatus getJAAStatus();
+
+    void setJAAStatus(JAAStatus jaaStatus);
 }

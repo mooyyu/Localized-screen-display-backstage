@@ -20,4 +20,6 @@ public interface DataService {
     List<StuSourceDistribution> getStuSourceDistribution();
 
     List<DevelopmentPath> getDevelopmentPath();
+
+    List<CollegeInfo> getCollegeInfo();
 }

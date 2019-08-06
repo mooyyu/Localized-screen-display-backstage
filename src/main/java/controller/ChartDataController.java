@@ -66,4 +66,10 @@ public class ChartDataController {
     public List<DevelopmentPath> getDevelopmentPath() {
         return dataService.getDevelopmentPath();
     }
+
+    @RequestMapping(value = "collegeInfo", method = {RequestMethod.GET})
+    @ResponseBody
+    public List<CollegeInfo> getCollegeInfo() {
+        return dataService.getCollegeInfo();
+    }
 }

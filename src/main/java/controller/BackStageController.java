@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pojo.CollegeInfo;
 import pojo.DevelopmentPath;
+import pojo.JAAStatus;
 import service.BackStageService;
 
 import java.util.List;
@@ -65,5 +66,17 @@ public class BackStageController {
     @ResponseBody
     public void updateCollegeInfo(@RequestBody CollegeInfo collegeInfo) {
         backStageService.updateCollegeInfo(collegeInfo);
+    }
+
+    @RequestMapping(value = "getJAAStatus", method = {RequestMethod.GET})
+    @ResponseBody
+    public JAAStatus getJAAStatus() {
+        return backStageService.getJAAStatus();
+    }
+
+    @RequestMapping(value = "setJAAStatus", method = {RequestMethod.POST})
+    @ResponseBody
+    public void setJAAStatus(@RequestBody JAAStatus jaaStatus) {
+        backStageService.setJAAStatus(jaaStatus);
     }
 }

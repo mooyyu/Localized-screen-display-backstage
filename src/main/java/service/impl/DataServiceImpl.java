@@ -60,4 +60,9 @@ public class DataServiceImpl implements DataService {
     public List<DevelopmentPath> getDevelopmentPath() {
         return dataDao.getDevelopmentPath();
     }
+
+    @Override
+    public List<CollegeInfo> getCollegeInfo() {
+        return dataDao.getCollegeInfo();
+    }
 }

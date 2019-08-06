@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.CollegeInfo;
 import pojo.DevelopmentPath;
+import pojo.JAAStatus;
 import service.BackStageService;
 
 import java.util.List;
@@ -72,5 +73,15 @@ public class BackStageServiceImpl implements BackStageService {
             }
             backStageDao.updateCollegeInfo(collegeInfo);
         }
+    }
+
+    @Override
+    public JAAStatus getJAAStatus() {
+        return backStageDao.getJAAStatus();
+    }
+
+    @Override
+    public void setJAAStatus(JAAStatus jaaStatus) {
+        backStageDao.setJAAStatus(jaaStatus);
     }
 }
