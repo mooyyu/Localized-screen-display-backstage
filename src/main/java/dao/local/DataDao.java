@@ -1,4 +1,4 @@
-package dao;
+package dao.local;
 
 import org.apache.ibatis.annotations.Param;
 import pojo.*;
@@ -14,7 +14,9 @@ public interface DataDao {
 
     List<Hanging> getHanging();
 
-    List<Hanging> getHangingDistribution(@Param("type") String type);
+    List<Hanging> getZyHangingDistribution();
+
+    List<Hanging> getBjHangingDistribution();
 
     List<PopularElective> getPopularElective();
 

@@ -1,4 +1,4 @@
-package dao;
+package dao.local;
 
 import org.apache.ibatis.annotations.Param;
 import pojo.CollegeInfo;

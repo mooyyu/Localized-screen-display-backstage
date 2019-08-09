@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.local.BackStageDao">
+    <resultMap type="pojo.DevelopmentPath" id="DevelopmentPathResultMap">
+        <id property="id" column="id"/>
+        <result property="year" column="year"/>
+        <result property="info" column="info"/>
+    </resultMap>
+    <resultMap type="pojo.CollegeInfo" id="CollegeInfoResultMap">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="intro" column="intro"/>
+    </resultMap>
+    <resultMap type="pojo.JAAStatus" id="JAAStatusResultMap">
+        <result property="xymc" column="xymc"/>
+        <result property="dqszj" column="dqszj"/>
+        <result property="xn" column="xn"/>
+        <result property="xq" column="xq"/>
+    </resultMap>
+
+    <insert id="addDevelopmentPath">-- noinspection SqlDialectInspectionForFile
+        insert into collegeHistory(ID, YEAR, INFO)
+        select coalesce(max(id), 0) + 1, '', ''
+        from COLLEGEHISTORY
+    </insert>
+    <insert id="addCollegeInfo">-- noinspection SqlDialectInspectionForFile
+        insert into collegeInfo(ID, title, intro)
+        select coalesce(max(id), 0) + 1, '', ''
+        from COLLEGEINFO
+    </insert>
+    <update id="updateDevelopmentPath" parameterType="pojo.DevelopmentPath">-- noinspection SqlDialectInspectionForFile
+        update collegeHistory
+        set year=#{year},
+            info=#{info}
+        where id=#{id}
+    </update>
+    <update id="updateCollegeInfo">-- noinspection SqlDialectInspectionForFile
+        update collegeInfo
+        set title=#{title},
+            intro=#{intro}
+        where id=#{id}
+    </update>
+    <delete id="deleteDevelopmentPath">-- noinspection SqlDialectInspectionForFile
+        delete from collegeHistory
+        where id=#{id}
+    </delete>
+    <delete id="deleteCollegeInfo">-- noinspection SqlDialectInspectionForFile
+        delete from collegeInfo
+        where id=#{id}
+    </delete>
+    <select id="getDevelopmentPath" resultType="pojo.DevelopmentPath">-- noinspection SqlDialectInspectionForFile
+        select id, year, info
+        from collegeHistory
+        order by id
+    </select>
+    <select id="getCollegeInfo" resultType="pojo.CollegeInfo">-- noinspection SqlDialectInspectionForFile
+        select id, title, intro
+        from collegeInfo
+        order by id
+    </select>
+    <select id="getJAAStatus" resultType="pojo.JAAStatus">-- noinspection SqlDialectInspectionForFile
+        select xymc, dqszj, xn, xq
+        from JAASTATUS
+        limit 0, 1
+    </select>
+    <update id="setJAAStatus">-- noinspection SqlDialectInspectionForFile
+        update JAASTATUS
+        set dqszj=#{dqszj},
+            xn=#{xn},
+            xq=#{xq}
+        where xymc=#{xymc}
+    </update>
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.local.DataDao">
+    <resultMap type="pojo.CollegeOverview" id="CollegeOverviewResultMap">
+        <result property="bjul" column="bjul"/>
+        <result property="zyul" column="zyul"/>
+        <result property="jsrs" column="jsrs"/>
+        <result property="xsrs" column="xsrs"/>
+    </resultMap>
+    <resultMap type="pojo.CollegeTrend" id="CollegeTrendResultMap">
+        <result property="dqszj" column="dqszj"/>
+        <result property="bjul" column="bjul"/>
+        <result property="zyul" column="zyul"/>
+        <result property="xsrs" column="xsrs"/>
+    </resultMap>
+    <resultMap type="pojo.ProfessionOverview" id="ProfessionOverviewResultMap">
+        <result property="zymc" column="zymc"/>
+        <result property="bjul" column="bjul"/>
+        <result property="xsrs" column="xsrs"/>
+    </resultMap>
+    <resultMap type="pojo.Hanging" id="HangingResultMap">
+        <result property="mc" column="mc"/>
+        <result property="rate" column="rate"/>
+    </resultMap>
+    <resultMap type="pojo.PopularElective" id="PopularElectiveResultMap">
+        <result property="kcmc" column="kcmc"/>
+        <result property="xsrs" column="xsrs"/>
+    </resultMap>
+    <resultMap type="pojo.StuSourceDistribution" id="StuSourceDistributionResultMap">
+        <result property="stuSource" column="stuSource"/>
+        <result property="xsrs" column="xsrs"/>
+    </resultMap>
+    <resultMap type="pojo.DevelopmentPath" id="DevelopmentPathResultMap">
+        <result property="year" column="year"/>
+        <result property="info" column="info"/>
+    </resultMap>
+    <resultMap type="pojo.CollegeInfo" id="CollegeInfoResultMap">
+        <result property="title" column="title"/>
+        <result property="intro" column="intro"/>
+    </resultMap>
+
+    <select id="getCollegeOverview" resultType="pojo.CollegeOverview">-- noinspection SqlDialectInspectionForFile
+        select zyul, bjul, xsrs, jsrs
+        from collegeOverview
+    </select>
+    <select id="getCollegeTrend" resultType="pojo.CollegeTrend">-- noinspection SqlDialectInspectionForFile
+        select dqszj, xsrs, zyul, bjul
+        from collegeTrend
+        order by DQSZJ
+    </select>
+    <select id="getProfessionOverview" resultType="pojo.ProfessionOverview">-- noinspection SqlDialectInspectionForFile
+        select zymc, bjul, xsrs
+        from professionOverview
+    </select>
+    <select id="getHanging" resultType="pojo.Hanging">-- noinspection SqlDialectInspectionForFile
+        select mc, rate
+        from Hanging
+        order by rate desc
+    </select>
+    <select id="getPopularElective" resultType="pojo.PopularElective">-- noinspection SqlDialectInspectionForFile
+        select kcmc, xsrs
+        from popularElective
+        order by xsrs desc
+    </select>
+    <select id="getStuSourceDistribution" resultType="pojo.StuSourceDistribution">-- noinspection SqlDialectInspectionForFile
+        select stuSource, xsrs
+        from stuSourceDistribution
+        order by xsrs desc
+    </select>
+    <select id="getZyHangingDistribution" resultType="pojo.Hanging">-- noinspection SqlDialectInspectionForFile
+        select mc, rate
+        from zyHangingDistribution
+        order by mc
+    </select>
+    <select id="getBjHangingDistribution" resultType="pojo.Hanging">-- noinspection SqlDialectInspectionForFile
+        select mc, rate
+        from bjHangingDistribution
+        order by mc
+    </select>
+    <select id="getDevelopmentPath" resultType="pojo.DevelopmentPath">-- noinspection SqlDialectInspectionForFile
+        select year, info
+        from collegeHistory
+        order by year
+    </select>
+    <select id="getCollegeInfo" resultType="pojo.CollegeInfo">-- noinspection SqlDialectInspectionForFile
+        select title, intro
+        from collegeInfo
+    </select>
+</mapper>

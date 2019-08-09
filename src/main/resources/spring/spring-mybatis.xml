@@ -9,12 +9,28 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <!-- 2.数据库连接池 -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <bean id="dataSourceJmi" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <!-- 配置连接池属性 -->
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClass" value="${jmi.jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jmi.jdbc.url}"/>
+        <property name="user" value="${jmi.jdbc.username}"/>
+        <property name="password" value="${jmi.jdbc.password}"/>
+
+        <!-- c3p0连接池的私有属性 -->
+        <property name="initialPoolSize" value="${initialSize}"/>
+        <property name="maxIdleTime" value="${maxIdleTime}"/>
+        <property name="maxPoolSize" value="${maxPoolSize}"/>
+        <property name="minPoolSize" value="${minPoolSize}"/>
+        <property name="autoCommitOnClose" value="${autoCommitOnClose}"/>
+        <property name="checkoutTimeout" value="${checkoutTimeout}"/>
+        <property name="acquireRetryAttempts" value="${acquireRetryAttempts}"/>
+    </bean>
+    <bean id="dataSourceLocal" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 配置连接池属性 -->
+        <property name="driverClass" value="${local.jdbc.driver}"/>
+        <property name="jdbcUrl" value="${local.jdbc.url}"/>
+        <property name="user" value="${local.jdbc.username}"/>
+        <property name="password" value="${local.jdbc.password}"/>
 
         <!-- c3p0连接池的私有属性 -->
         <property name="initialPoolSize" value="${initialSize}"/>
@@ -27,22 +43,38 @@
     </bean>
 
     <!-- 3.配置SqlSessionFactory对象 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="jmiSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 注入数据库连接池 -->
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dataSourceJmi"/>
         <!-- 配置MyBaties全局配置文件:mybatis-config.xml -->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <!-- 扫描pojo包 使用别名 -->
         <property name="typeAliasesPackage" value="pojo"/>
         <!-- 扫描sql配置文件:mapper需要的xml文件 -->
-        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/jmi-*.xml"/>
+    </bean>
+    <bean id="localSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSourceLocal"/>
+        <!-- 配置MyBaties全局配置文件:mybatis-config.xml -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 扫描pojo包 使用别名 -->
+        <property name="typeAliasesPackage" value="pojo"/>
+        <!-- 扫描sql配置文件:mapper需要的xml文件 -->
+        <property name="mapperLocations" value="classpath:mapper/local-*.xml"/>
     </bean>
 
     <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 注入sqlSessionFactory -->
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="sqlSessionFactoryBeanName" value="jmiSqlSessionFactory"/>
         <!-- 给出需要扫描Dao接口包 -->
-        <property name="basePackage" value="dao"/>
+        <property name="basePackage" value="dao.jmi"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 注入sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="localSqlSessionFactory"/>
+        <!-- 给出需要扫描Dao接口包 -->
+        <property name="basePackage" value="dao.local"/>
     </bean>
 </beans>

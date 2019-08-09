@@ -1,6 +1,6 @@
 package service.impl;
 
-import dao.DataDao;
+import dao.local.DataDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.*;
@@ -39,8 +39,10 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public List<Hanging> getHangingDistribution(String type) {
-        if (type.equals("bjmc") || type.equals("zymc")) {
-            return dataDao.getHangingDistribution(type);
+        if (type.equals("bjmc")) {
+            return dataDao.getBjHangingDistribution();
+        } else if (type.equals("zymc")) {
+            return dataDao.getZyHangingDistribution();
         } else {
             return new ArrayList<>();
         }
