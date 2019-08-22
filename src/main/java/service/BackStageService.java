@@ -3,6 +3,7 @@ package service;
 import pojo.CollegeInfo;
 import pojo.DevelopmentPath;
 import pojo.JAAStatus;
+import pojo.OverviewStatus;
 
 import java.util.List;
 
@@ -26,4 +27,10 @@ public interface BackStageService {
     JAAStatus getJAAStatus();
 
     void setJAAStatus(JAAStatus jaaStatus);
+
+    void updateDataFromRaw();
+
+    OverviewStatus getOverviewStatus();
+
+    void setOverviewStatus(OverviewStatus overviewStatus);
 }

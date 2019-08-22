@@ -1,11 +1,13 @@
 package service.impl;
 
+import dao.jmi.RawDataDao;
 import dao.local.BackStageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.CollegeInfo;
 import pojo.DevelopmentPath;
 import pojo.JAAStatus;
+import pojo.OverviewStatus;
 import service.BackStageService;
 
 import java.util.List;
@@ -13,9 +15,11 @@ import java.util.List;
 @Service
 public class BackStageServiceImpl implements BackStageService {
     private final BackStageDao backStageDao;
+    private final RawDataDao rawDataDao;
     @Autowired
-    public BackStageServiceImpl(BackStageDao backStageDao) {
+    public BackStageServiceImpl(BackStageDao backStageDao, RawDataDao rawDataDao) {
         this.backStageDao = backStageDao;
+        this.rawDataDao = rawDataDao;
     }
 
     @Override
@@ -83,5 +87,36 @@ public class BackStageServiceImpl implements BackStageService {
     @Override
     public void setJAAStatus(JAAStatus jaaStatus) {
         backStageDao.setJAAStatus(jaaStatus);
+    }
+
+    @Override
+    public void updateDataFromRaw() {
+        JAAStatus jaaStatus = backStageDao.getJAAStatus();
+        backStageDao.deleteCollegeOverview();
+        backStageDao.addCollegeOverview(rawDataDao.getRawCollegeOverview(jaaStatus));
+        backStageDao.deleteCollegeTrend();
+        backStageDao.addCollegeTrend(rawDataDao.getRawCollegeTrend(jaaStatus));
+        backStageDao.deleteProfessionOverview();
+        backStageDao.addProfessionOverview(rawDataDao.getRawProfessionOverview(jaaStatus));
+        backStageDao.deleteStuSourceDistribution();
+        backStageDao.addStuSourceDistribution(rawDataDao.getRawStuSourceDistribution(jaaStatus));
+        backStageDao.deletePopularElective();
+        backStageDao.addPopularElective(rawDataDao.getRawPopularElective(jaaStatus));
+        backStageDao.deleteHanging();
+        backStageDao.addHanging(rawDataDao.getRawHanging(jaaStatus));
+        backStageDao.deleteBjHangingDistribution();
+        backStageDao.addBjHangingDistribution(rawDataDao.getRawHangingDistribution(jaaStatus, "bjmc"));
+        backStageDao.deleteZyHangingDistribution();
+        backStageDao.addZyHangingDistribution(rawDataDao.getRawHangingDistribution(jaaStatus, "zymc"));
+    }
+
+    @Override
+    public OverviewStatus getOverviewStatus() {
+        return backStageDao.getOverviewStatus();
+    }
+
+    @Override
+    public void setOverviewStatus(OverviewStatus overviewStatus) {
+        backStageDao.setOverviewStatus(overviewStatus);
     }
 }

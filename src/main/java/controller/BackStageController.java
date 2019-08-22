@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pojo.CollegeInfo;
 import pojo.DevelopmentPath;
 import pojo.JAAStatus;
+import pojo.OverviewStatus;
 import service.BackStageService;
 
 import java.util.List;
@@ -78,5 +79,30 @@ public class BackStageController {
     @ResponseBody
     public void setJAAStatus(@RequestBody JAAStatus jaaStatus) {
         backStageService.setJAAStatus(jaaStatus);
+    }
+
+    @RequestMapping(value = "updateDataFromRaw", method = {RequestMethod.GET})
+    @ResponseBody
+    public void updateDataFromRaw() {
+        backStageService.updateDataFromRaw();
+    }
+
+    @RequestMapping(value = "updateParamAndData", method = {RequestMethod.POST})
+    @ResponseBody
+    public void updateParamAndData(@RequestBody JAAStatus jaaStatus) {
+        backStageService.setJAAStatus(jaaStatus);
+        backStageService.updateDataFromRaw();
+    }
+
+    @RequestMapping(value = "getOverviewStatus", method = {RequestMethod.GET})
+    @ResponseBody
+    public OverviewStatus getOverviewStatus() {
+        return backStageService.getOverviewStatus();
+    }
+
+    @RequestMapping(value = "setOverviewStatus", method = {RequestMethod.POST})
+    @ResponseBody
+    public void setOverviewStatus(@RequestParam OverviewStatus overviewStatus) {
+        backStageService.setOverviewStatus(overviewStatus);
     }
 }

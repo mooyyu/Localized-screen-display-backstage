@@ -67,4 +67,9 @@ public class DataServiceImpl implements DataService {
     public List<CollegeInfo> getCollegeInfo() {
         return dataDao.getCollegeInfo();
     }
+
+    @Override
+    public OverviewStatus getOverviewStatus() {
+        return dataDao.getOverviewStatus();
+    }
 }

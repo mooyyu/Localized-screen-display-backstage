@@ -25,4 +25,6 @@ public interface DataDao {
     List<DevelopmentPath> getDevelopmentPath();
 
     List<CollegeInfo> getCollegeInfo();
+
+    OverviewStatus getOverviewStatus();
 }

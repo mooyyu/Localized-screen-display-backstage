@@ -22,4 +22,6 @@ public interface DataService {
     List<DevelopmentPath> getDevelopmentPath();
 
     List<CollegeInfo> getCollegeInfo();
+
+    OverviewStatus getOverviewStatus();
 }

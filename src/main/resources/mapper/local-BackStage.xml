@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress SqlDialectInspection -->
 <mapper namespace="dao.local.BackStageDao">
     <resultMap type="pojo.DevelopmentPath" id="DevelopmentPathResultMap">
         <id property="id" column="id"/>
@@ -19,57 +20,141 @@
         <result property="xn" column="xn"/>
         <result property="xq" column="xq"/>
     </resultMap>
+    <resultMap type="pojo.OverviewStatus" id="OverviewStatusResultMap">
+        <result property="panelCode" column="panelCode"/>
+        <result property="moduleCodeList" column="moduleCodeList"/>
+    </resultMap>
 
-    <insert id="addDevelopmentPath">-- noinspection SqlDialectInspectionForFile
+    <insert id="addDevelopmentPath">
         insert into collegeHistory(ID, YEAR, INFO)
         select coalesce(max(id), 0) + 1, '', ''
         from COLLEGEHISTORY
     </insert>
-    <insert id="addCollegeInfo">-- noinspection SqlDialectInspectionForFile
+    <insert id="addCollegeInfo">
         insert into collegeInfo(ID, title, intro)
         select coalesce(max(id), 0) + 1, '', ''
         from COLLEGEINFO
     </insert>
-    <update id="updateDevelopmentPath" parameterType="pojo.DevelopmentPath">-- noinspection SqlDialectInspectionForFile
+    <insert id="addCollegeOverview">
+        insert into collegeOverview (ZYUL, BJUL, XSRS, JSRS)
+        values (#{zyul}, #{bjul}, #{xsrs}, #{jsrs})
+    </insert>
+    <insert id="addCollegeTrend">
+        insert into collegeTrend (DQSZJ, XSRS, ZYUL, BJUL) values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.dqszj}, #{item.xsrs}, #{item.zyul}, #{item.bjul})
+        </foreach>
+    </insert>
+    <insert id="addProfessionOverview">
+        insert into professionOverview (ZYMC, BJUL, XSRS) values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.zymc}, #{item.bjul}, #{item.xsrs})
+        </foreach>
+    </insert>
+    <insert id="addHanging">
+        insert into hanging (mc, rate) values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.mc}, #{item.rate})
+        </foreach>
+    </insert>
+    <insert id="addZyHangingDistribution">
+        insert into zyhangingDistribution (mc, rate) values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.mc}, #{item.rate})
+        </foreach>
+    </insert>
+    <insert id="addBjHangingDistribution">
+        insert into bjhangingDistribution (mc, rate) values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.mc}, #{item.rate})
+        </foreach>
+    </insert>
+    <insert id="addPopularElective">
+        insert into popularElective (KCMC, XSRS) values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.kcmc}, #{item.xsrs})
+        </foreach>
+    </insert>
+    <insert id="addStuSourceDistribution">
+        insert into stuSourceDistribution (STUSOURCE, XSRS) values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.stuSource}, #{item.xsrs})
+        </foreach>
+    </insert>
+    <update id="updateDevelopmentPath" parameterType="pojo.DevelopmentPath">
         update collegeHistory
         set year=#{year},
             info=#{info}
         where id=#{id}
     </update>
-    <update id="updateCollegeInfo">-- noinspection SqlDialectInspectionForFile
+    <update id="updateCollegeInfo">
         update collegeInfo
         set title=#{title},
             intro=#{intro}
         where id=#{id}
     </update>
-    <delete id="deleteDevelopmentPath">-- noinspection SqlDialectInspectionForFile
+    <delete id="deleteDevelopmentPath">
         delete from collegeHistory
         where id=#{id}
     </delete>
-    <delete id="deleteCollegeInfo">-- noinspection SqlDialectInspectionForFile
+    <delete id="deleteCollegeInfo">
         delete from collegeInfo
         where id=#{id}
     </delete>
-    <select id="getDevelopmentPath" resultType="pojo.DevelopmentPath">-- noinspection SqlDialectInspectionForFile
+    <delete id="deleteCollegeOverview">
+        truncate table collegeOverview
+    </delete>
+    <delete id="deleteCollegeTrend">
+        truncate table collegeTrend
+    </delete>
+    <delete id="deleteProfessionOverview">
+        truncate table professionOverview
+    </delete>
+    <delete id="deleteHanging">
+        truncate table hanging
+    </delete>
+    <delete id="deleteZyHangingDistribution">
+        truncate table zyHangingDistribution
+    </delete>
+    <delete id="deleteBjHangingDistribution">
+        truncate table bjHangingDistribution
+    </delete>
+    <delete id="deletePopularElective">
+        truncate table popularElective
+    </delete>
+    <delete id="deleteStuSourceDistribution">
+        truncate table stuSourceDistribution
+    </delete>
+    <select id="getDevelopmentPath" resultType="pojo.DevelopmentPath">
         select id, year, info
         from collegeHistory
         order by id
     </select>
-    <select id="getCollegeInfo" resultType="pojo.CollegeInfo">-- noinspection SqlDialectInspectionForFile
+    <select id="getCollegeInfo" resultType="pojo.CollegeInfo">
         select id, title, intro
         from collegeInfo
         order by id
     </select>
-    <select id="getJAAStatus" resultType="pojo.JAAStatus">-- noinspection SqlDialectInspectionForFile
+    <select id="getJAAStatus" resultType="pojo.JAAStatus">
         select xymc, dqszj, xn, xq
         from JAASTATUS
         limit 0, 1
     </select>
-    <update id="setJAAStatus">-- noinspection SqlDialectInspectionForFile
+    <select id="getOverviewStatus" resultType="pojo.OverviewStatus">
+        select panelCode, moduleCodeList
+        from overviewStatus
+        limit 0, 1
+    </select>
+    <update id="setJAAStatus">
         update JAASTATUS
         set dqszj=#{dqszj},
             xn=#{xn},
             xq=#{xq}
         where xymc=#{xymc}
+    </update>
+    <update id="setOverviewStatus">
+        update overviewStatus
+        set panelCode=#{panelCode},
+            moduleCodeList=#{moduleCodeList}
     </update>
 </mapper>

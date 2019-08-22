@@ -1,6 +1,5 @@
 package controller;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +16,12 @@ public class ChartDataController {
     @Autowired
     public ChartDataController(DataService dataService) {
         this.dataService = dataService;
+    }
+
+    @RequestMapping(value = "overviewStatus", method = {RequestMethod.GET})
+    @ResponseBody
+    public OverviewStatus getOverviewStatus() {
+        return dataService.getOverviewStatus();
     }
 
     @RequestMapping(value = "collegeOverview", method = {RequestMethod.GET})
