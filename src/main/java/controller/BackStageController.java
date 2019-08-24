@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @CrossOrigin
-@RequestMapping(value = "/backStage", method = {RequestMethod.GET}, produces = "application/json;charset=utf-8")
+@RequestMapping(value = "/backStage", method = {RequestMethod.GET, RequestMethod.POST}, produces = "application/json;charset=utf-8")
 public class BackStageController {
     private final BackStageService backStageService;
     @Autowired
@@ -102,7 +102,7 @@ public class BackStageController {
 
     @RequestMapping(value = "setOverviewStatus", method = {RequestMethod.POST})
     @ResponseBody
-    public void setOverviewStatus(@RequestParam OverviewStatus overviewStatus) {
+    public void setOverviewStatus(@RequestBody OverviewStatus overviewStatus) {
         backStageService.setOverviewStatus(overviewStatus);
     }
 }
