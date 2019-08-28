@@ -4,12 +4,13 @@ import dao.jmi.RawDataDao;
 import dao.local.BackStageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pojo.CollegeInfo;
-import pojo.DevelopmentPath;
-import pojo.JAAStatus;
-import pojo.OverviewStatus;
+import pojo.*;
 import service.BackStageService;
+import utils.Md5;
+import utils.VCodeGenerator;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
@@ -118,5 +119,32 @@ public class BackStageServiceImpl implements BackStageService {
     @Override
     public void setOverviewStatus(OverviewStatus overviewStatus) {
         backStageDao.setOverviewStatus(overviewStatus);
+    }
+
+    @Override
+    public String checkLogin(LoginInfo loginInfo, HttpServletRequest request) {
+        if (request.getSession().getAttribute("vcode") != null &&
+            request.getSession().getAttribute("vcode").toString().equalsIgnoreCase((loginInfo.getVcode()))
+        ) {
+            loginInfo.setPassword(new Md5().createMD5(loginInfo.getPassword()));
+            request.getSession().setAttribute("isLogin", true);
+            return backStageDao.checkLogin(loginInfo) == 1 ? "success" : "error";
+        } else {
+            return "vcode_error";
+        }
+    }
+
+    @Override
+    public String checkIsLogin(HttpServletRequest request) {
+        if (request.getSession().getAttribute("isLogin") == null) {
+            return "no";
+        } else {
+            return request.getSession().getAttribute("isLogin").equals(true) ? "yes" : "no";
+        }
+    }
+
+    @Override
+    public void getVCode(HttpServletRequest request, HttpServletResponse response) {
+        new VCodeGenerator().getVCode(request, response);
     }
 }

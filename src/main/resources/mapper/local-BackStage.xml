@@ -145,6 +145,12 @@
         from overviewStatus
         limit 0, 1
     </select>
+    <select id="checkLogin" resultType="java.lang.Integer">
+        select count(*)
+        from admin
+        where user=#{user} and
+              password=#{password}
+    </select>
     <update id="setJAAStatus">
         update JAASTATUS
         set dqszj=#{dqszj},

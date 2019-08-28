@@ -61,4 +61,6 @@ public interface BackStageDao {
     OverviewStatus getOverviewStatus();
 
     void setOverviewStatus(OverviewStatus overviewStatus);
+
+    int checkLogin(LoginInfo loginInfo);
 }
